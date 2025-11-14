@@ -158,5 +158,57 @@ export function logout(req,res){
 
 
 export async function onboard(req,res) {
-    
+    try{
+        const userId = req.user._id;
+
+        const {fullname, bio, nativeLanguage, learningLanguage, location} = req.body;
+
+        if(!fullname || !bio || !nativeLanguage || !learningLanguage || !location){
+            return res.status(400).json({
+                message:"Missing fields",
+                missingFields: [
+                    !fullname && "fullname",
+                    !bio && "bio",
+                    !nativeLanguage && "nativeLanguage",
+                    !learningLanguage && "learningLanguage",
+                    !location && "location",
+                ].filter(Boolean),
+            });
+        }
+
+        //  update the user who is onboarded
+        const updateUser = await User.findByIdAndUpdate(userId, {
+            ...req.body,
+            isOnboarded : true,
+        },{new:true})
+
+        if(!updateUser){
+            return res.status(400).json({
+                message:"User not found"
+            });
+        }
+
+        // TODO UPDATE TEH USER INFO IN THE STEAM
+        try{
+            await upsertStreamUser({
+                id:updateUser._id.toString(),
+                name:updateUser.fullname,
+                image:updateUser.profilePic || "",
+            });
+            console.log(`Stream user ${updateUser.fullname}updated after the onboarding`)
+        }catch(error){
+
+        }
+
+        res.status(200).json({
+            success:true,
+            user:updateUser
+        });
+    }
+    catch(error){
+        console.error("obboarding error ", error);
+        return res.status(500).json({
+            message:"Internal Server Error"
+        });
+    }
 }
