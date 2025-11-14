@@ -6,4 +6,7 @@ router.post("/signup", signup);
 router.post("/login", login);
 router.post("/logout", logout);
 
+// we must protect this route so that only authenticated user can visit this 
+router.post("/onboarding",protectRoute, onboard);
+
 export default router;
