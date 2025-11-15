@@ -1,7 +1,7 @@
 import express from "express";
 import { protectRoute } from "../middleware/auth.js";
 const router = express.Router();
-import { getRecommendedUsers, getMyFriends, sendFriendRequest, acceptFriendRequest } from "../controllers/user.js";
+import { getRecommendedUsers, getMyFriends, sendFriendRequest, acceptFriendRequest, getFriendRequest, getOutgoingFriendReqs } from "../controllers/user.js";
 
 // apply authentication routes middle to all the routes
 router.use(protectRoute);
@@ -13,5 +13,8 @@ router.post("/friend-request/:id", sendFriendRequest);
 
 // put becuase we are updating something 
 router.put("/friend-request/:id/accept", acceptFriendRequest);
+
+router.get("/friend-requests", getFriendRequest);
+router.get("/outgoing-friend-request", getOutgoingFriendReqs);
 
 export default router;
