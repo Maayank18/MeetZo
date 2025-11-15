@@ -1,6 +1,6 @@
 import React from 'react'
 
-const OnboardingPage = () => {
+const ThemeSelector = () => {
   return (
     <div>
       
@@ -8,4 +8,4 @@ const OnboardingPage = () => {
   )
 }
 
-export default OnboardingPage
+export default ThemeSelector
