@@ -11,7 +11,7 @@ import { CheckCircleIcon, MapPinIcon, UserPlusIcon, UsersIcon } from "lucide-rea
 
 import { capitialize } from "../lib/utils";
 
-import FriendCard, { getLanguageFlag } from "../components/FriendCard";
+import FriendCard, { getLanguageFlag } from "../components/FriendCard.jsx";
 import NoFriendsFound from "../components/NoFriendsFound";
 
 const HomePage = () => {

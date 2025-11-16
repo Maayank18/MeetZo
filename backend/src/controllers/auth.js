@@ -86,11 +86,6 @@ export async function signup(req,res){
     }
 }
 
-
-
-
-
-
 export async function login(req,res){
 
     try{
@@ -143,8 +138,6 @@ export async function login(req,res){
     }
 }
 
-
-
 export function logout(req,res){
     // here we just have to clear the cookies 
     res.clearCookie("jwt");
@@ -153,9 +146,6 @@ export function logout(req,res){
         message:"Logout successful"
     });
 }
-
-
-
 
 export async function onboard(req,res) {
     try{
