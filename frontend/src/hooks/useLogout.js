@@ -1,11 +1,18 @@
-import React from 'react'
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { logout } from "../lib/api";
 
 const useLogout = () => {
-  return (
-    <div>
-      
-    </div>
-  )
-}
+  const queryClient = useQueryClient();
 
-export default useLogout
+  const {
+    mutate: logoutMutation,
+    isPending,
+    error,
+  } = useMutation({
+    mutationFn: logout,
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["authUser"] }),
+  });
+
+  return { logoutMutation, isPending, error };
+};
+export default useLogout;
