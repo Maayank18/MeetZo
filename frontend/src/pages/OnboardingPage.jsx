@@ -3,7 +3,7 @@
 // import { useMutation, useQueryClient } from "@tanstack/react-query";
 // import toast from "react-hot-toast";
 // import { completeOnboarding } from "../lib/api";
-// import { LoaderIcon, MapPinIcon, ShipWheelIcon, ShuffleIcon } from "lucide-react";
+// import { LoaderIcon, MapPinIcon, FerrisWheel, ShuffleIcon } from "lucide-react";
 // import { LANGUAGES } from "../constants";
 
 // const OnboardingPage = () => {
@@ -173,7 +173,7 @@
 //             <button className="btn btn-primary w-full" disabled={isPending} type="submit">
 //               {!isPending ? (
 //                 <>
-//                   <ShipWheelIcon className="size-5 mr-2" />
+//                   <FerrisWheel className="size-5 mr-2" />
 //                   Complete Onboarding
 //                 </>
 //               ) : (
@@ -199,7 +199,7 @@ import { completeOnboarding } from "../lib/api";
 import {
   LoaderIcon,
   MapPinIcon,
-  ShipWheelIcon,
+  FerrisWheel,
   ShuffleIcon,
   CameraIcon,
 } from "lucide-react";
@@ -416,7 +416,7 @@ const OnboardingPage = () => {
             >
               {!isLoading ? (
                 <>
-                  <ShipWheelIcon className="size-5 mr-2" />
+                  <FerrisWheel className="size-5 mr-2" />
                   Complete Onboarding
                 </>
               ) : (

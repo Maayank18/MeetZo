@@ -9,7 +9,7 @@ export async function getRecommendedUsers(req,res){
         const recommendedUsers = await User.find({
             $and:[
                 {_id:{$ne: currentUserId}},
-                {$id:{$nin:currentUser.friends}},
+                {_id:{$nin:currentUser.friends}}, // bug caught here instead of dollar it should be _
                 {isOnboarded:true} // exclude the current user that is me
             ]
         })
@@ -46,6 +46,9 @@ export async function getMyFriends(req,res){
 
 export async function sendFriendRequest(req,res){
     try{
+        console.log("SEND REQ: req.user:", req.user && { id: req.user.id, _id: req.user._id });
+console.log("SEND REQ: params:", req.params);
+
         const myId = req.user.id; // my current id 
         const {id: recipientId} = req.params; // id of other user
 
@@ -71,12 +74,14 @@ export async function sendFriendRequest(req,res){
         }
 
         // check if we have already send a request
+        // debugged changes 
         const existingRequest = await FriendRequest.findOne({
-            $or:[
-                {sender:myId, recipient:recipientId},
-                {recipient:recipientId, sender:myId},
+            $or: [
+              { sender: myId, recipient: recipientId },       // I sent to you
+              { sender: recipientId, recipient: myId },       // You sent to me
             ],
-        });
+          });
+          
 
         if(existingRequest){
             return res.status(400).json({
@@ -99,7 +104,7 @@ export async function sendFriendRequest(req,res){
     }
 }
 
-export async function acceptFriendRequest(params) {
+export async function acceptFriendRequest(req,res) {
     try{
         const {id:requestId} = req.params;
         const friendRequest = await FriendRequest.findById(requestId);
@@ -117,7 +122,7 @@ export async function acceptFriendRequest(params) {
             });
         }
 
-        friendRequest.status = "accept";
+        friendRequest.status = "accepted";
         await friendRequest.save();
 
         // add each user to each other freiends array
