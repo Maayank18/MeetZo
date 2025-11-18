@@ -6,7 +6,7 @@ import {
   getUserFriends,
   sendFriendRequest,
 } from "../lib/api";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import { CheckCircleIcon, MapPinIcon, UserPlusIcon, UsersIcon } from "lucide-react";
 
 import { capitialize } from "../lib/utils";
@@ -109,11 +109,11 @@ const HomePage = () => {
                     <div className="card-body p-5 space-y-4">
                       <div className="flex items-center gap-3">
                         <div className="avatar size-16 rounded-full">
-                          <img src={user.profilePic} alt={user.fullName} />
+                          <img src={user.profilePic} alt={user.fullname} />
                         </div>
 
                         <div>
-                          <h3 className="font-semibold text-lg">{user.fullName}</h3>
+                          <h3 className="font-semibold text-lg">{user.fullname}</h3>
                           {user.location && (
                             <div className="flex items-center text-xs opacity-70 mt-1">
                               <MapPinIcon className="size-3 mr-1" />

@@ -1,6 +1,6 @@
 // import { useState } from "react";
 // import { FerrisWheel } from "lucide-react";
-// import { Link } from "react-router";
+// import { Link } from "react-router-dom";
 // import {useMutation, useQueryClient} from "@tanstack/react-query"
 // import { signup } from "../lib/api";
 
@@ -8,7 +8,7 @@
 
 // const SignUpPage = () => {
 //   const [signupData, setSignupData] = useState({
-//     fullName: "",
+//     fullname: "",
 //     email: "",
 //     password: "",
 //   });
@@ -66,7 +66,7 @@
 //                 </div>
 
 //                 <div className="space-y-3">
-//                   {/* FULLNAME */}
+//                   {/* fullname */}
 //                   <div className="form-control w-full">
 //                     <label className="label">
 //                       <span className="label-text">Full Name</span>
@@ -75,8 +75,8 @@
 //                       type="text"
 //                       placeholder="Ex. John Doe"
 //                       className="input input-bordered w-full"
-//                       value={signupData.fullName}
-//                       onChange={(e) => setSignupData({ ...signupData, fullName: e.target.value })}
+//                       value={signupData.fullname}
+//                       onChange={(e) => setSignupData({ ...signupData, fullname: e.target.value })}
 //                       required
 //                     />
 //                   </div>
@@ -173,7 +173,7 @@
 
 import { useState } from "react";
 import { ShipWheelIcon } from "lucide-react";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 
 import useSignUp from "../hooks/useSignUp";
 
@@ -237,7 +237,7 @@ const SignUpPage = () => {
                 </div>
 
                 <div className="space-y-3">
-                  {/* FULLNAME */}
+                  {/* fullname */}
                   <div className="form-control w-full">
                     <label className="label">
                       <span className="label-text">Full Name</span>

@@ -149,6 +149,8 @@ export function logout(req,res){
 
 export async function onboard(req,res) {
     try{
+        console.log("onboard: req.user:", req.user && req.user._id);
+        console.log("onboard: req.body:", req.body);
         const userId = req.user._id;
 
         const {fullname, bio, nativeLanguage, learningLanguage, location} = req.body;

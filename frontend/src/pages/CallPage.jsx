@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router";
+import { useNavigate, useParams } from "react-router-dom";
 import useAuthUser from "../hooks/useAuthUser";
 import { useQuery } from "@tanstack/react-query";
 import { getStreamToken } from "../lib/api";
@@ -44,7 +44,7 @@ const CallPage = () => {
 
         const user = {
           id: authUser._id,
-          name: authUser.fullName,
+          name: authUser.fullname,
           image: authUser.profilePic,
         };
 
