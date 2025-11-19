@@ -52,7 +52,8 @@ const userSchema = new mongoose.Schema(
 // should be done before creating the user Schema// pre hook fro hashing the password
 userSchema.pre("save", async function(next){
     if(!this.isModified("password")){
-        return exit();
+        // return exit();
+        return next();
     }
     try{
         const salt = await bcrypt.genSalt(10);
