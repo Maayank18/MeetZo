@@ -1,75 +1,86 @@
 // import express from "express";
 // import dotenv from "dotenv";
 // import cors from "cors";
-// import authRoutes from "./routes/auth.js"
-// import userRoutes from "./routes/user.js"
+// import cookieParser from "cookie-parser";
+// import authRoutes from "./routes/auth.js";
+// import userRoutes from "./routes/user.js";
 // import chatRoutes from "./routes/chat.js";
 // import { connectDB } from "./lib/db.js";
+
+// // Load environment variables FIRST
+// dotenv.config();
+
 // const app = express();
-// import cookieParser from "cookie-parser";
+// const PORT = process.env.PORT || 5001;
+
+// // ---- Middlewares ----
 // app.use(express.json());
 // app.use(cookieParser());
 
-// dotenv.config();
-
-
-// const PORT = process.env.PORT;
-
-// app.use(cors({
+// // CORS (MUST include credentials for cookies to work)
+// app.use(
+//   cors({
 //     origin: "http://localhost:5173",
-//     credentials:true // allow frontend to send the cookies
-// }))
+//     credentials: true,
+//   })
+// );
 
-
+// // ---- Routes ----
 // app.use("/api/auth", authRoutes);
 // app.use("/api/users", userRoutes);
 // app.use("/api/chat", chatRoutes);
 
-
-// app.listen(PORT, ()=> {
-//     console.log("server is running  on 5001 port");
-//     connectDB();
-// })
+// // ---- Start Server Only After DB Connect ----
+// connectDB()
+//   .then(() => {
+//     app.listen(PORT, () => {
+//       console.log(`Server running on port ${PORT}`);
+//     });
+//   })
+//   .catch((err) => {
+//     console.error("DB connection failed:", err);
+//   });
 
 import express from "express";
-import dotenv from "dotenv";
-import cors from "cors";
+import "dotenv/config";
 import cookieParser from "cookie-parser";
+import cors from "cors";
+import path from "path";
+
 import authRoutes from "./routes/auth.js";
 import userRoutes from "./routes/user.js";
 import chatRoutes from "./routes/chat.js";
+
 import { connectDB } from "./lib/db.js";
 
-// Load environment variables FIRST
-dotenv.config();
-
 const app = express();
-const PORT = process.env.PORT || 5001;
+const PORT = process.env.PORT;
 
-// ---- Middlewares ----
-app.use(express.json());
-app.use(cookieParser());
+const __dirname = path.resolve();
 
-// CORS (MUST include credentials for cookies to work)
 app.use(
   cors({
     origin: "http://localhost:5173",
-    credentials: true,
+    credentials: true, // allow frontend to send cookies
   })
 );
 
-// ---- Routes ----
+app.use(express.json());
+app.use(cookieParser());
+
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/chat", chatRoutes);
 
-// ---- Start Server Only After DB Connect ----
-connectDB()
-  .then(() => {
-    app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
-    });
-  })
-  .catch((err) => {
-    console.error("DB connection failed:", err);
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../frontend/dist")));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
   });
+}
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+  connectDB();
+});
