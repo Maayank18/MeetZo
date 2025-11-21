@@ -79,13 +79,21 @@ app.use("/api/chat", chatRoutes);
 //     res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
 //   });
 // }
-if (process.env.NODE_ENV === "production") {
-  const clientBuildPath = path.join(__dirname, "../frontend/dist");
-  app.use(express.static(clientBuildPath));
+// if (process.env.NODE_ENV === "production") {
+//   const clientBuildPath = path.join(__dirname, "../frontend/dist");
+//   app.use(express.static(clientBuildPath));
 
-  // catch-all for SPA — use "/*" (Express 5 accepts "/*" not "*")
+//   // catch-all for SPA — use "/*" (Express 5 accepts "/*" not "*")
+//   app.get("*", (req, res) => {
+//     res.sendFile(path.join(clientBuildPath, "index.html"));
+//   });
+// }
+if (process.env.NODE_ENV === "production") {
+  // Since we run this from inside 'backend', '..' goes up to root, then into 'frontend'
+  app.use(express.static(path.join(__dirname, "../frontend/dist")));
+
   app.get("*", (req, res) => {
-    res.sendFile(path.join(clientBuildPath, "index.html"));
+    res.sendFile(path.join(__dirname, "../frontend/dist/index.html"));
   });
 }
 
