@@ -84,7 +84,7 @@ if (process.env.NODE_ENV === "production") {
   app.use(express.static(clientBuildPath));
 
   // catch-all for SPA — use "/*" (Express 5 accepts "/*" not "*")
-  app.get("/*", (req, res) => {
+  app.get("*", (req, res) => {
     res.sendFile(path.join(clientBuildPath, "index.html"));
   });
 }
